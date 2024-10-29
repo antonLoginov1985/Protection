@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+fieldset {
+    margin-bottom: 10px;
+}
+
+button {
+    margin-top: 10px;
+}
+
+.mainscrin {
+background-color: red;
+text-align: center;
+margin-top: 20%;
+align-items: center;
+}

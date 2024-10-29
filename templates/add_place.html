@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Новое место обучения</title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+      integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+   <link rel="stylesheet" href="{{ url_for('static', filename='/css/sttest.css') }}">
+</head>
+
+<body>
+   <div style=" background-color: #70aff0;color: black"
+      class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3  box-shadow">
+      <h4 class="my-0 mr-md-auto font-weight-bold" style="color: #70aff0;">А</h4>
+      <nav class="my-2 my-md-0 mr-md-3">
+         {% if not current_user.is_authenticated %}
+         <a class="p-2 text-dark" href="/login">Log In / Register</a>
+         {% else %}
+         {{ current_user.login }}
+         <a href="/logout" style="color:black; text-decoration: underline">Logout</a>
+         {% endif %}
+      </nav>
+   </div>
+   <div style="margin-top: 15%;">
+      <div class="mainscrin">
+         <h1 style="padding-bottom: 25px;">Добавить новое место</h1>
+         <form action="{{ url_for('add_place') }}" method="post" style="margin-bottom: 15px;">
+            <div class="testgr">
+               <label for="name">Наименование организации:</label>
+               <input type="text" maxlength="100" name="name" placeholder="Наименование организации" required>
+            </div>
+            <div class="testgr">
+               <label for="address">Адрес:</label>
+               <input maxlength="100" name="address" placeholder="Адрес">
+            </div>
+            <button type="submit" class="buttons">Добавить</button>
+         </form>
+         <a href="{{ url_for('place') }}" class="hrf">Места обучения</a>
+      </div>
+   </div>
+</body>
+
+</html>

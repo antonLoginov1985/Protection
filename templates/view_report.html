@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ url_for('static', filename='/css/sttest.css') }}">
+       
+        <title>Реестр работников, прошедших проверку знаний </title>
+        
+<style>
+h3 {
+            text-align: center;
+            color: white;
+        }
+.table {
+   table-layout: fixed:
+   margin-left: 10%;
+}
+</style>
+    </head>
+    <body>
+    
+<div  style=" background-color: #70aff0; color: black" class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3  box-shadow">
+      <h4 class="my-0 mr-md-auto font-weight-bold " >Отчеты</h4>
+      <nav class="my-2 my-md-0 mr-md-3">
+       
+       {% if not current_user.is_authenticated %}
+          <a class="p-2 text-dark" href="/login">Log In / Register</a>
+        {% else %}
+        {{ current_user.login }}
+           <a  href="/logout" style="color:black; text-decoration: underline">Logout</a>
+        {% endif %}
+      </nav>
+      
+    </div>
+    <div  class="mainscrin"><button onclick="document.location='/arm'" class="buttons">Вернуться в АРМ работника</button></div><br>
+      <form method="POST" class="mainscrin">
+       <label for="block_training">Блок обучения:</label>  
+       <select class="selecter" id="block_training" name= "block_training" required>>
+       {% for block in blockTrainings%}
+           {% if block.id == block_id %}
+            <option value="{{ block.id }}" selected>{{ block.name}}</option>
+            {% else %}
+              <option value="{{ block.id }}">{{ block.name }}</option>
+            {% endif %}
+       {% endfor %}
+       </select>
+       <br>
+      <label for="place" class="selecter">Место проведения обучения:</label>
+      <select class="selecter" id="place" name= "place" required>>
+      {% for place in places%}
+          {% if place.id == place_id %}
+           <option value="{{ place.id }}" selected>{{ place.name}}</option>
+           {% else %}
+             <option value="{{ place.id }}">{{ place.name }}</option>
+           {% endif %}
+      {% endfor %}
+      </select>
+      <br>
+    <button type="submit" class="buttons" style="font-size: 18px;">Сформировать</button>
+</form>
+        {% if reports %}
+            <table class="table">
+                <h3>Реестр работников прошедших обучение по блоку: {{ block.name }}</h3>
+                <thead class="thead">
+                    <tr>
+                        <th>ФИО</th>
+                        <th>Должность</th>
+                        <th>Дата проверки знаний</th>
+                        <th>Результат</th>
+                        <th>Номер документа</th>
+                        <th>Следующая проверка знаний</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody">
+                    {% for report in reports %}
+                        <tr>
+                            <td>{{ report[0] }}</td>
+                            <td>{{ report[1] }}</td>
+                            <td>{{ report[2]|formatdatetime('%d %B %Y')}}</td>
+                            <td>{{ report[3]|formatresult() }}</td>
+                            <td>{{ report[4] }}</td>
+                            <td>{{ report[5]|formatdatetime('%d %B %Y') }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="mainscrin">Нет данных о прохождении обучения работников.</p>
+        {% endif %}
+    </body>
+    
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/sttest.css') }}">
+
+    <title>Реестр работников, прошедших проверку знаний </title>
+
+    <style>
+        h3 {
+            text-align: center;
+            color: white;
+        }
+
+        .table {
+            table-layout: fixed: margin-left: 10%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style=" background-color: #70aff0; color: black"
+        class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3  box-shadow">
+        <h4 class="my-0 mr-md-auto font-weight-bold ">Отчеты</h4>
+        <nav class="my-2 my-md-0 mr-md-3">
+
+            {% if not current_user.is_authenticated %}
+            <a class="p-2 text-dark" href="/login">Log In / Register</a>
+            {% else %}
+            {{ current_user.login }}
+            <a href="/logout" style="color:black; text-decoration: underline">Logout</a>
+            {% endif %}
+        </nav>
+    </div>
+     <div  class="mainscrin"><button onclick="document.location='/arm'" class="buttons">Вернуться в АРМ работника</button></div><br>
+
+    {% if employees %}
+    <table class="table">
+        <h3>Реестр работников</h3>
+        <thead class="thead">
+            <tr>
+                <th>zup_code</th>
+                <th>ФИО</th>
+                <th>Должность</th>
+                <th>Подразделение</th>
+                <th>Дата приема</th>
+                <th>СНИЛС</th>
+
+            </tr>
+        </thead>
+        <tbody class="tbody">
+            {% for employee in employees %}
+            <tr>
+                <td>{{ employee[0] }}</td>
+                <td>{{ employee[1] }}</td>
+                <td>{{ employee[2] }}</td>
+                <td>{{ employee[3] }}</td>
+                <td>{{ employee[4]|formatdatetime('%d %B %Y')}}</td>
+                <td>{{ employee[5] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="mainscrin">Нет данных о работников.</p>
+    {% endif %}
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+      <link rel="stylesheet" href="{{ url_for('static', filename='/css/sttest.css') }}">
+    <title>Пожарная безопасность</title>
+    <style>
+    .tst {
+    text-align: center;
+    align-items: center;
+    margin-top: 15px;
+
+    }
+        header {
+            background-color: #333;
+            color: rgb(216, 195, 195);
+            padding: 20px;
+        }
+
+        .main {
+           
+            
+            box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+          
+        }
+        p{
+            font-weight:bold 
+          
+        }
+        ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        li {
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: .2em;
+        }
+
+        footer a {
+            color: blue;
+            cursor: pointer;
+            transition: all .3s ease;
+            
+        }
+
+        
+    </style>
+</head>
+
+<body>
+   
+    <header>
+        <h1>Требования пожарной безопасности на предприятии</h1>
+    </header>
+  <p style="margin-top: 15%;"/>
+      <div class="tst">
+    <div class="main">
+        <p>Требования безопасности во время работы</p>
+        <ul>
+            <li>Постоянно содержать в чистоте и порядке свое рабочее место; </li>
+            <li>Проходы, выходы не загромождать различными предметами и
+                оборудованием; </li>
+            <li>Не пользоваться открытым огнем в служебных и рабочих
+                помещениях; </li>
+            <li>Не подключать самовольно электроприборы, исправлять эл. сеть и
+                предохранители; </li>
+        </ul>
+        <p>В случае возникновения пожара немедленно покиньте здание через ближайший эвакуационный выход. Не пользуйтесь
+            лифтами!</p>
+    </div>
+
+    <!-- Ссылка на видео о пожарной безопасности -->
+    <div>
+        <a href="https://www.youtube.com/watch?v=V2nsbGY_rnU" target="_blank" class="hrf">Посмотрите видео о правилах пожарной
+            безопасности</a>
+    </div>
+    </div>
+</body>
+
+</html>

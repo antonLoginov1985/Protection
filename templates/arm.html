@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+     <link rel="stylesheet" href="{{ url_for('static', filename='/css/sttest.css') }}">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Автоматизированное рабочее место менеджера по охране труда</title>
+    <!-- Стилизация кнопок -->
+
+  </head>
+  <body>
+  <div  style=" background-color: #70aff0;color: black" class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3  box-shadow">
+        <h4 class="my-0 mr-md-auto font-weight-bold ">Автоматизированное рабочее место менеджера</h4>
+        <nav class="my-2 my-md-0 mr-md-3">
+         
+         {% if not current_user.is_authenticated %}
+            <a class="p-2 text-dark" href="/login">Log In / Register</a>
+          {% else %}
+          {{ current_user.login }}
+             <a  href="/logout" style="color:black; text-decoration: underline">Logout</a>
+          {% endif %}
+        </nav>
+      </div>
+  
+ <p style="margin-top: 15%;">
+
+    <!-- Кнопки -->
+     
+     <div  class="mainscrin"> <button onclick="document.location='{{ url_for('training')}}'" class="buttons"><i class="fa fa-file-text-o"></i> Документы прохождения обучения работников</button></div>  
+     <div  class="mainscrin"> <button onclick="document.location='{{ url_for('place')}}'" class="buttons"><i class="fa fa-map-o"></i> Места обучения</button></div>  
+     <div  class="mainscrin"> <button onclick="document.location='{{ url_for('program')}}'" class="buttons"><i class="fa fa-bookmark-o"></i> Программы обучения</button></div>  
+     <div  class="mainscrin"> <button onclick="document.location='{{ url_for('view_report')}}'" class="buttons"><i class="fa fa-fire-extinguisher"></i> Реестр работников прошедших проверку знаний</button></div> 
+     <div  class="mainscrin"> <button onclick="document.location='{{ url_for('view_employees')}}'" class="buttons"><i class="fa fa-fire-extinguisher"></i> Список сотрудников</button></div> 
+  </p>
+  </body>
+</html>
+

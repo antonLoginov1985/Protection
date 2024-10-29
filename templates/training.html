@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+      <title>Список документов обучения</title>
+      <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+       <link rel="stylesheet" href="{{ url_for('static', filename='/css/sttest.css') }}">  
+       
+      <style>
+.wrap-grid {
+  display: grid;
+  grid-template-columns: 5fr 1fr 1fr;
+}
+ 
+.wrap-grid > * {
+  height: 100%;
+  padding: 10px; margin: 5;
+  border: 1px solid white;
+ 
+}
+</style>
+</head>
+
+<body>
+<div  style=" background-color: #70aff0;color: black" class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3  box-shadow">
+       <h4 class="my-0 mr-md-auto font-weight-bold" style="color: #70aff0;"></h4>
+      <nav class="my-2 my-md-0 mr-md-3">
+       
+       {% if not current_user.is_authenticated %}
+          <a class="p-2 text-dark" href="/login">Log In / Register</a>
+        {% else %}
+        {{ current_user.login }}
+           <a  href="/logout" style="color:black; text-decoration: underline">Logout</a>
+        {% endif %}
+      </nav>
+    </div>
+
+  
+    <div  class="mainscrin"><button onclick="document.location='/arm'" class="buttons">Вернуться в АРМ работника</button></div><br>
+     <h1>Список докуметов обучения работников</h1>
+    {% for train in training %}
+    <div class="wrap-grid">
+        <p> {{ train.employees_id }} - {{ train.training_date }}, {{ train.program_id }} ({{ train.place_id }}) </p>
+       <span><a href="{{url_for('edit_training', training_id = train.id)}}" class="hrf">Изменить</a></span>
+       <span><a href="{{url_for('delete_training', training_id = train.id)}}" class="hrf">Удалить</a></span>
+     </div>
+       {% endfor %}
+ <div  class="mainscrin"><button onclick="document.location='/add_training/new/'" class="buttons">Создать документ прохождения обучения работников</button></div><br>
+ </div>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/sttest.css') }}">
+    <title>Обучение по охране труда</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            width: 400px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            margin-top: 15px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            outline: none;
+            resize: vertical;
+
+        }
+
+        textarea {
+            min-height: 75px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            cursor: pointer;
+            float: right;
+        }
+
+        select {
+            -webkit-appearance: none;
+            /* для Chrome, Safari и Opera */
+            -moz-appearance: none;
+            /* для Firefox */
+            appearance: none;
+        }
+
+        option {
+            background-color: #fff;
+            color: black;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<h1>Обучение работика</h1>
+
+<body>
+    <form action="{{ url_for('add_training')}}" method="post">
+        <div class="form-group">
+            <label for="employee">Выберите сотрудника:</label>
+            <select name="employee" class="form-control" maxlength="100" id="employee_select"></select>
+
+            <label for="snils">СНИЛС:</label>
+            <input type="text" id="snils" class="form-control" readonly>
+
+            <label for="training_date">Дата прохождения обучения:</label>
+            <input type="date" name="training_date" id="training_date">>
+
+            <label for="place">Место проведения обучения:</label>
+            <select id="place" name="place">
+                {% for place in places%}
+                <option value="{{ place.id}}"> {{place.name}}</option>
+                {% endfor %}
+            </select>
+
+            <label for="block_training">Блок обучения:</label>
+            <select name="block_training" class="form-control" id="block_training" name="block_training">
+                {% for block in blockTrainings%}
+                <option value="{{ block.id}}"> {{block.name}}</option>
+                {% endfor %}
+            </select>
+
+            <label for="program">Программа обучения:</label>
+            <select name="program" class="form-control" maxlength="100" id="program" readonly></select>
+
+            <label for="typetraining">Вид обучения:</label>
+            <select name="typetraining" class="form-control" id="typetraining" name="typetraining">
+                {% for typetraining in typetrainings%}
+                <option value="{{ typetraining.id}}"> {{typetraining.name}}</option>
+                {% endfor %}
+            </select>
+
+            <label for="typedocument">Вид итогового документа:</label>
+            <select name="typedocument" class="form-control" id="typedocument" name="typedocument">
+                {% for document in typedocuments%}
+                <option value="{{ document.id}}"> {{document.name}}</option>
+                {% endfor %}
+            </select>
+
+            <label for="result">Результат:</label>
+            <select name=="result" class="form-control">
+                <option :value=1>Сдано</option>
+                <option :value=0>Не сдано</option>
+            </select>
+
+            <label for="date_document">Дата документа:</label>
+            <input type="date" name="date_document" placeholder="Дата документа">
+
+            <label for="number_document">Номер документа:</label>
+            <input maxlength="100" name="number_document" placeholder="Номер документа">
+
+            <label for="next_date">Дата следующего плановой провреки значений:</label>
+            <input type="date" name="next_date" id="next_date" <label for="file_path">Приложение:</label>
+            <input type="file" name="file_path" accept=".pdf" required style="margin-bottom: 15px">
+
+            <button type="submit" class="buttons">Записать</button>
+        </div>
+        <a href="{{ url_for('training')}}" class="hrf">Список документов прохождении обучения</a>
+    </form>
+    <script>
+        // Функция для заполнения списка сотрудников
+        function populateEmployeeList() {
+            fetch('/employees')
+                .then(response => response.json())
+                .then(data => {
+                    const employeeSelect = document.getElementById('employee_select');
+                    data.forEach(employee => {
+                        const option = document.createElement('option');
+                        option.value = employee.id;
+                        option.text = employee.last_name + " " + employee.first_name + " " + employee.middle_name;
+                        employeeSelect.add(option);
+                    });
+                });
+        }
+
+        // Функция для заполнения списка программ обучения
+        function programList() {
+
+            const block_id = document.getElementById('block_training').value;
+            fetch(`/programs/${block_id}`)
+                .then(response => response.json())
+                .then(data => {
+                    const programSelect = document.getElementById('program');
+                    data.forEach(program => {
+                        const option = document.createElement('option');
+                        option.value = program.id;
+                        option.text = program.name;
+                        programSelect.add(option);
+                    });
+                });
+        }
+
+        // Функция для заполнения полей СНИЛС и должность
+        function fillEmployeeInfo() {
+            const selectedSnils = document.getElementById('employee_select').value;
+            fetch(`/employees/${selectedSnils}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('snils').value = data.snils;
+                    // document.getElementById('position').value = data.position;
+                });
+        }
+
+        const trainingDate = document.getElementById('training_date');
+        function calculateNextTrainingDate() {
+            // Получаем выбранную дату
+
+            const selectedDate = new Date(trainingDate.value);
+
+            // Добавляем 3 года к выбранной дате
+            selectedDate.setFullYear(selectedDate.getFullYear() + 3);
+
+            // Преобразуем дату в строку и записываем в поле
+            document.getElementById('next_date').value = selectedDate.toISOString().split('T')[0];
+        }
+        // Заполнение списка сотрудников при загрузке страницы
+        populateEmployeeList();
+
+        // Обновление полей СНИЛС и должность при изменении выбранного сотрудника
+        document.getElementById('employee_select').addEventListener('change', fillEmployeeInfo);
+        document.getElementById('block_training').addEventListener('change', programList);
+        document.getElementById('training_date').addEventListener('change', calculateNextTrainingDate);
+    </script>
+</body>
+
+</html>

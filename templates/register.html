@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+     <link rel="stylesheet" href="{{ url_for('static', filename='/css/sttest.css') }}">
+      <style>
+    table{
+    margin-left:40%;
+    
+    }
+     </style>
+    <title>Title</title>
+    
+</head>
+<body>
+  <div  style=" background-color: #70aff0;color: black" class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3  box-shadow">
+   <h4 class="my-0 mr-md-auto font-weight-bold" style="color: #70aff0;">А</h4>
+      </div>
+      
+       <p style="margin-top: 10%">
+ <div class="mainscrin">
+<h1 style ="padding-bottom: 25px;">Регистрация пользователя</h1>
+
+<form method="POST" style="  text-align: center; align-items: center; margin-bottom">
+    <table>
+        <tr>
+            <td>Имя пользователя</td>
+            <td><input type="text" name="login"></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><input type="text" name="email"></td>
+        </tr>        
+        <tr>
+            <td>Пароль</td>
+            <td><input type="password" name="psw"></td>
+        </tr>
+        <tr>
+            <td>Повторите пароль</td>
+            <td><input type="password" name="psw2"></td>
+        </tr>
+       <tr>
+           <td>Роль администратора</td>
+           <td><input type="checkbox" name="is_admin"></td>
+       </tr>
+       <tr>
+           <td>Роль менеджера по охране труда</td>
+           <td><input type="checkbox" name="is_manager"></td>
+       </tr>
+        <tr>
+            <td><a href="{{ url_for('login_page') }}" class="hrf">Войти</a></td>
+            <td><input type="submit" class = "buttons" value="Регистрация"></td>
+        </tr>
+    </table>
+</form>
+</div>
+</p>
+
+</body>
+</html>

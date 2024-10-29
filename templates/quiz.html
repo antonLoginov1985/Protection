@@ -1,0 +1,10 @@
+
+{% block title %}
+    Static Files Example
+{% endblock %}
+
+{% block body %}
+{% for q in questList %}
+	<a href="{{url_for('quiz',sub=q.subject,qid=q.qid)}}"><button>{{q.qid}}</button></a>
+{% endfor %}	
+{% endblock %}
